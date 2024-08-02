@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xlmns:th="http://www.thymeleaf.org">
+
+<head>
+	<title>Todo List</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/4.5.2/css/bootstrap.min.css">
+</head>
+
+<body>
+	<div class="container">
+		<h1 class="mt-4">Todo List</h1>
+		<form id="addTodoForm">
+			<div class="form-group">
+				<input type="text" id="todoTitle" class="form-control" placeholder="Add new todo">
+			</div>
+			<button type="submit" class="btn btn-primary">Add Todo</button>
+		</form>
+
+		<ul id="todoList" class="list-group mt-4"></ul>
+	</div>
+
+	<script>
+		document.addEventListener('DOMContentLoaded', function () {
+			const todoList = document.getElementeById('todoList');
+			const addTodoForm = document.getElementById('addTodoForm');
+			const todoTitle = document.getElementById('todoTitle')
+
+			function fetchTodos() {
+				fetch('/api/todos')
+					.then(response => response.json())
+					.then(todos => {
+						todoList.innerHTML = '';
+						todos.forEach(todo => {
+							const li = document.createElement('li');
+							li.className = 'list-group-item';
+							li.textContent = todo.title;
+							todoList.appendChild(li);
+						})
+					})
+			}
+
+			addTodoForm.addEventListener('submit', function (event) {
+				event.preventDefault();
+				const title = todoTitle.value;
+				fetch('/api/todos', {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json'
+					},
+					body: JSON.stringify({title})
+				})
+					.then(() => {
+						todoTitle.value = '';
+						fetchTodos();
+					})
+			})
+
+			fetchTodos()
+		})
+	</script>
+</body>
+
+</html>
