@@ -1,4 +1,4 @@
-package com.tidz.todoList;
+package com.tidz.todoList.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
