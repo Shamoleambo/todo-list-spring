@@ -21,7 +21,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		Optional<com.tidz.todoList.entity.User> userOptional = this.userRepo.findByUserName(username);
+		Optional<com.tidz.todoList.entity.User> userOptional = this.userRepo.findByUsername(username);
 		com.tidz.todoList.entity.User user = userOptional
 				.orElseThrow(() -> new UsernameNotFoundException("User not found"));
 

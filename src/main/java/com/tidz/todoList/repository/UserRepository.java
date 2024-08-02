@@ -8,5 +8,5 @@ import com.tidz.todoList.entity.User;
 
 public interface UserRepository extends JpaRepository<User, Long> {
 
-	Optional<User> findByUserName(String username);
+	Optional<User> findByUsername(String username);
 }
